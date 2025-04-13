@@ -21,14 +21,14 @@ st.title("Real-Time Retail Data Dashboard")
 
 # top-level filters 
 
-job_filter = st.selectbox("Select the Country", pd.unique(df['Country']))
+selected_country = st.selectbox("Select the Country", pd.unique(df['Country']))
 
 # creating a single-element container.
 placeholder = st.empty()
 
-# dataframe filter 
+# filter by country
 
-df = df[df['Country']==job_filter]
+df = df[df['Country']==selected_country]
 
 # Add a text input box for the query
 query = st.text_input("Enter your query here:", "")
