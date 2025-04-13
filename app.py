@@ -31,4 +31,32 @@ placeholder = st.empty()
 
 df = df[df['Country']==job_filter]
 
-# near real-time / live feed simulation 
+# Add a text input box for the query
+query = st.text_input("Enter your query here:", "")
+
+# Menu
+menu = ["Home", "Data Exploration", "Visualization", "About"]
+selected_page = st.sidebar.selectbox("Select a page:", menu)
+
+
+# Slider
+slider_value = st.sidebar.slider("Select a value:", 0, 100, 50)
+
+# Display content based on selected page
+if selected_page == "Home":
+    st.write("Welcome to the home page!")
+    st.write(f"Selected Country: {selected_country}")
+    st.write(f"Slider Value: {slider_value}")
+
+elif selected_page == "Data Exploration":
+    st.write("Data Exploration page")
+    st.write(f"Selected Country: {selected_country}")
+    st.write(f"Slider Value: {slider_value}")
+elif selected_page == "Visualization":
+    st.write("Visualization page")
+    st.write(f"Selected Country: {selected_country}")
+    st.write(f"Slider Value: {slider_value}")
+elif selected_page == "About":
+    st.write("About Us")
+    st.write(f"Selected Country: {selected_country}")
+    st.write(f"Slider Value: {slider_value}")
