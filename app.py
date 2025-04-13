@@ -39,7 +39,7 @@ fig_map = px.choropleth(
 st.plotly_chart(fig_map)
 
  # Calculate total spent per country
-country_totals = df.groupby('Country')['total_spent'].sum()
+country_totals = df.groupby('Country')['total_spent'].sum().reset_index()
 
 # Sort countries by total spent
 sorted_countries = country_totals.sort_values(ascending=False)
