@@ -34,7 +34,7 @@ df_selected_country = df[df["Country"].isin(selected_countries)]
 st.subheader("Country Map")
 fig_map = px.choropleth(
     df_selected_country, locations="Country", locationmode="country names", color="max_spent",
-    hover_name="Country", title="Total Spent by Country"
+    hover_name="Country", scope="europe", title="Total Spent by Country"
 )
 st.plotly_chart(fig_map)
 
@@ -45,20 +45,6 @@ country_totals = df.groupby('Country')['total_spent'].sum()
 sorted_countries = country_totals.sort_values(ascending=False).reset_index()
 
 
-# Bar chart for tcountries with total spent
-st.subheader("Top Countries by Sum of Total Spent")
-st.dataframe(sorted_countries,
-             column_order=("Country", "Total Spent"),
-             hide_index=True,
-             width=None,
-             column_config={
-                 "Countries": st.column_config.TextColumn("Countries",),
-                 "Total Spent": st.column_config.ProgressColumn(
-                     "Total Spent",
-                     format="%f",
-                     min_value=0,
-                     max_value=max(sorted_countries['total_spent']),
-                 )}
-            )
+# Bar chart for countries with total spent
 fig = px.bar(sorted_countries, x='Country', y='total_spent', title='Total Spent per Country (Sorted)')
 st.plotly_chart(fig)
