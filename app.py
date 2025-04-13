@@ -17,12 +17,11 @@ st.set_page_config(
 
 # dashboard title
 
-st.title("Real-Time / Retail Data Dashboard")
+st.title("Real-Time Retail Data Dashboard")
 
 # top-level filters 
 
 job_filter = st.selectbox("Select the Country", pd.unique(df['Country']))
-
 
 # creating a single-element container.
 placeholder = st.empty()
@@ -37,7 +36,6 @@ query = st.text_input("Enter your query here:", "")
 # Menu
 menu = ["Home", "Data Exploration", "Visualization", "About"]
 selected_page = st.sidebar.selectbox("Select a page:", menu)
-
 
 # Slider
 slider_value = st.sidebar.slider("Select a value:", 0, 100, 50)
