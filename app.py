@@ -7,7 +7,7 @@ import plotly.express as px # interactive charts
 
 # read csv from a github repo
 # df = pd.read_csv("https://raw.githubusercontent.com/Lexie88rus/bank-marketing-analysis/master/bank.csv")
-df=pd.read_csv("https://github.com/kariarxy/GenAIBot/blob/main/retail_data.csv")
+df=pd.read_csv("https://raw.githubusercontent.com/kariarxy/GenAIBot/main/retail_data.csv")
 
 st.set_page_config(
     page_title = 'Real-Time Retail Data Dashboard',
