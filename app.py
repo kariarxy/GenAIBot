@@ -47,12 +47,15 @@ sorted_countries = country_totals.sort_values(ascending=False)
 
 # Bar chart for top 10 countries with total spent
 st.subheader("Top Countries by Sum of Total Spent")
-st.dataframe(sorted_countries,column_order=("Country", "Total Spent"),hide_index=True, width=None,
+st.dataframe(sorted_countries,
+             column_order=("Country", "Total Spent"),
+             hide_index=True,
+             width=None,
              column_config={
-                 "Countries": st.column_config.TextColumn("Countries",),
+                 "Countries": st.column_config.TextColumn("Countries"),
                  "Total Spent": st.column_config.ProgressColumn(
                      "Total Spent",
                      format="%f",
                      min_value=0,
-                     max_value=max(sorted_countries.Total Spent),)}
+                     max_value=max(sorted_countries.Total Spent))}
             )
