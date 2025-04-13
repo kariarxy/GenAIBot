@@ -58,3 +58,16 @@ elif selected_page == "About":
     st.write("About Us")
     st.write(f"Selected Country: {selected_country}")
     st.write(f"Slider Value: {slider_value}")
+
+if columns_to_analyze:
+    for col in columns_to_analyze:
+        if col in country_data.columns: # Check if the column exists in the filtered data
+          min_val = country_data[col].min()
+          max_val = country_data[col].max()
+          st.write(f"For {col} in {selected_country}:")
+          st.write(f"- Minimum: {min_val}")
+          st.write(f"- Maximum: {max_val}")
+        else:
+            st.warning(f"Column '{col}' not found in data for {selected_country}")
+else:
+  st.write("Select at least one column to display min/max values.")
