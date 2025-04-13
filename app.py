@@ -37,9 +37,6 @@ query = st.text_input("Enter your query here:", "")
 menu = ["Home", "Data Exploration", "Visualization", "About"]
 selected_page = st.sidebar.selectbox("Select a page:", menu)
 
-# Slider
-slider_value = st.sidebar.slider("Select a value:", 0, 100, 50)
-
 # Display content based on selected page
 if selected_page == "Home":
     st.write("Welcome to the home page!")
