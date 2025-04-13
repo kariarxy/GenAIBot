@@ -19,59 +19,38 @@ st.set_page_config(
 
 st.title("Real-Time Retail Data Dashboard")
 
-# top-level filters 
-
-selected_country = st.selectbox("Select the Country", pd.unique(df['Country']))
-
-# creating a single-element container.
-placeholder = st.empty()
-
-# filter by country
-
-country_data = df[df['Country']==selected_country]
-
-# Add a text input box for the query
-query = st.text_input("Enter your query here:", "")
-
-# Menu
-menu = ["Home", "Data Exploration", "Visualization", "About"]
-selected_page = st.sidebar.selectbox("Select a page:", menu)
-
-# Display content based on selected page
-if selected_page == "Home":
-    st.write("Welcome to the home page!")
-    st.write(f"Selected Country: {selected_country}")
+st.markdown("<h1 style='color: blue;'>Retail Data Analysis</h1>", unsafe_allow_html=True)
 
 
-elif selected_page == "Data Exploration":
-    st.write("Data Exploration page")
-    st.write(f"Selected Country: {selected_country}")
+# Sidebar for filtering
+st.sidebar.header("Filters")
+selected_countries = st.sidebar.multiselect("Select Countries", df['Country'].unique(), default=list(df["Country"].unique()))
 
-elif selected_page == "Visualization":
-    st.write("Visualization page")
-    st.write(f"Selected Country: {selected_country}")
-    st.write(f"Slider Value: {slider_value}")
-elif selected_page == "About":
-    st.write("About Us")
-    st.write(f"Selected Country: {selected_country}")
+# Filter data based on sidebar selections
+filtered_df = df[df["Country"].isin(selected_countries)]
 
+# Map of countries with color based on total spent
+st.subheader("Country Map")
+fig_map = px.choropleth(
+    filtered_df, locations="Country", locationmode="country names", color="max_spent",
+    hover_name="Country", title="Total Spent by Country"
+)
+st.plotly_chart(fig_map)
 
-# Display the filtered data
-st.write(f"Data for {selected_country}:")
-st.dataframe(country_data)
+# Bar chart for top 10 countries with max spent
+st.subheader("Top 10 Countries by Max Spent")
+top_10_countries = filtered_df.nlargest(10, "max_spent")
+fig_bar = px.bar(top_10_countries, x="Country", y="max_spent",
+                 title="Top 10 Countries by Max Spent",
+                 labels={"max_spent": "Max Spent"})
+st.plotly_chart(fig_bar)
 
-# Column selection for min/max
-columns_to_analyze = st.multiselect("Select columns to find min/max:", df.columns[2:]) #Exclude CustomerID and Country
-
-if columns_to_analyze:
-    for col in columns_to_analyze:
-        if col in country_data.columns: # Check if the column exists in the filtered data
-          min_val = country_data[col].min()
-          max_val = country_data[col].max()
-          st.write(f"For {col} in {selected_country}:")
-          st.write(f"- Minimum: {min_val}")
-          st.write(f"- Maximum: {max_val}")
-        else:
-            st.warning(f"Column '{col}' not found in data for {selected_country}")
-else:
-  st.write("Select at least one column to display min/max values.")
+# Heatmap for total spent by country
+st.subheader("Total Spent Heatmap")
+heatmap_data = filtered_df.pivot_table(index='Country', values='max_spent', aggfunc="sum")
+fig_heatmap = go.Figure(data=go.Heatmap(z=heatmap_data.values,
+                                       x=heatmap_data.index,
+                                       y=["Total Spent"],
+                                       colorscale='Viridis'))
+fig_heatmap.update_layout(title="Total Spent Heatmap")
+st.plotly_chart(fig_heatmap)
