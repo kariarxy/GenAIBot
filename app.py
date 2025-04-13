@@ -60,3 +60,5 @@ st.dataframe(sorted_countries,
                      max_value=max(sorted_countries['total_spent']),
                  )}
             )
+fig = px.bar(sorted_countries, x='Country', y='total_spent', title='Total Spent per Country (Sorted)')
+st.plotly_chart(fig)
