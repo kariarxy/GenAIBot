@@ -28,7 +28,7 @@ st.sidebar.header("Filters")
 selected_countries = st.sidebar.multiselect("Select Countries", df['Country'].unique(), default=list(df["Country"].unique()))
 
 # Filter data based on sidebar selections
-filtered_df = df[df["Country"].isin(selected_countries)]
+df_selected_country = df[df["Country"].isin(selected_countries)]
 
 # Map of countries with color based on total spent
 st.subheader("Country Map")
@@ -38,20 +38,21 @@ fig_map = px.choropleth(
 )
 st.plotly_chart(fig_map)
 
-# Bar chart for top 10 countries with max spent
-st.subheader("Top 10 Countries by Max Spent")
-top_10_countries = filtered_df.nlargest(10, "max_spent")
-fig_bar = px.bar(top_10_countries, x="Country", y="max_spent",
-                 title="Top 10 Countries by Max Spent",
-                 labels={"max_spent": "Max Spent"})
-st.plotly_chart(fig_bar)
+ # Calculate total spent per country
+country_totals = df.groupby('Country')['total_spent'].sum()
 
-# Heatmap for total spent by country
-st.subheader("Total Spent Heatmap")
-heatmap_data = filtered_df.pivot_table(index='Country', values='max_spent', aggfunc="sum")
-fig_heatmap = go.Figure(data=go.Heatmap(z=heatmap_data.values,
-                                       x=heatmap_data.index,
-                                       y=["Total Spent"],
-                                       colorscale='Viridis'))
-fig_heatmap.update_layout(title="Total Spent Heatmap")
-st.plotly_chart(fig_heatmap)
+# Sort countries by total spent
+sorted_countries = country_totals.sort_values(ascending=False)
+
+
+# Bar chart for top 10 countries with total spent
+st.subheader("Top Countries by Sum of Total Spent")
+st.dataframe(sorted_countries,column_order=("Country", "Total Spent"),hide_index=True, width=None,
+             column_config={
+                 "Countries": st.column_config.TextColumn("Countries",),
+                 "Total Spent": st.column_config.ProgressColumn(
+                     "Total Spent",
+                     format="%f",
+                     min_value=0,
+                     max_value=max(sorted_countries.Total Spent),)}
+            )
