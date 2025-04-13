@@ -59,6 +59,13 @@ elif selected_page == "About":
     st.write(f"Selected Country: {selected_country}")
     st.write(f"Slider Value: {slider_value}")
 
+# Display the filtered data
+st.write(f"Data for {selected_country}:")
+st.dataframe(country_data)
+
+# Column selection for min/max
+columns_to_analyze = st.multiselect("Select columns to find min/max:", df.columns[2:]) #Exclude CustomerID and Country
+
 if columns_to_analyze:
     for col in columns_to_analyze:
         if col in country_data.columns: # Check if the column exists in the filtered data
