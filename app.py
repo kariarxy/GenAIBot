@@ -33,7 +33,7 @@ df_selected_country = df[df["Country"].isin(selected_countries)]
 # Map of countries with color based on total spent
 st.subheader("Country Map")
 fig_map = px.choropleth(
-    filtered_df, locations="Country", locationmode="country names", color="max_spent",
+    df_selected_country, locations="Country", locationmode="country names", color="max_spent",
     hover_name="Country", title="Total Spent by Country"
 )
 st.plotly_chart(fig_map)
