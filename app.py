@@ -28,7 +28,7 @@ placeholder = st.empty()
 
 # filter by country
 
-df = df[df['Country']==selected_country]
+country_data = df[df['Country']==selected_country]
 
 # Add a text input box for the query
 query = st.text_input("Enter your query here:", "")
