@@ -41,12 +41,12 @@ selected_page = st.sidebar.selectbox("Select a page:", menu)
 if selected_page == "Home":
     st.write("Welcome to the home page!")
     st.write(f"Selected Country: {selected_country}")
-    st.write(f"Slider Value: {slider_value}")
+
 
 elif selected_page == "Data Exploration":
     st.write("Data Exploration page")
     st.write(f"Selected Country: {selected_country}")
-    st.write(f"Slider Value: {slider_value}")
+
 elif selected_page == "Visualization":
     st.write("Visualization page")
     st.write(f"Selected Country: {selected_country}")
@@ -54,7 +54,7 @@ elif selected_page == "Visualization":
 elif selected_page == "About":
     st.write("About Us")
     st.write(f"Selected Country: {selected_country}")
-    st.write(f"Slider Value: {slider_value}")
+
 
 # Display the filtered data
 st.write(f"Data for {selected_country}:")
