@@ -57,5 +57,6 @@ st.dataframe(sorted_countries,
                      "Total Spent",
                      format="%f",
                      min_value=0,
-                     max_value=max(sorted_countries['total_spent']))}
+                     max_value=max(sorted_countries['total_spent']),
+                 )}
             )
